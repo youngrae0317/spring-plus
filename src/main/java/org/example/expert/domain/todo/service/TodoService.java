@@ -50,7 +50,8 @@ public class TodoService {
         );
     }
 
-    public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDateTime startDate, LocalDateTime endDate) {
+    public Page<TodoResponse> getTodos(int page, int size, String weather, LocalDateTime startDate,
+                                       LocalDateTime endDate) {
         Pageable pageable = PageRequest.of(page - 1, size);
 
         Page<Todo> todos = todoRepository.findByConditions(weather, startDate, endDate, pageable);
@@ -83,16 +84,11 @@ public class TodoService {
         );
     }
 
-    public Page<TodoSearchResponse> searchTodos(String title, LocalDateTime startDate, LocalDateTime endDate, String nickname, Pageable pageable) {
+    public Page<TodoSearchResponse> searchTodos(String title, LocalDateTime startDate, LocalDateTime endDate,
+                                                String nickname, Pageable pageable) {
 
-        // todo 데이터 가져오기
-        Page<Todo> todos = todoRepository.searchTodos(title, startDate, endDate, nickname, pageable);
+        // dto 페이지 반환
+        return todoRepository.searchTodos(title, startDate, endDate, nickname, pageable);
 
-        // map 기능 사용하여  dto 변환
-        return todos.map(todo -> new TodoSearchResponse(
-                todo.getTitle(),
-                (long) todo.getManagers().size(),
-                (long) todo.getComments().size()
-        ));
     }
 }
