@@ -21,9 +21,9 @@ public class Log extends Timestamped {
     private Long id;
 
     @Column(nullable = false)
-    private String requestContents;
+    private String contents;
 
-    public Log(String requestContents) {
-        this.requestContents = requestContents;
+    public Log(String contents) {
+        this.contents = contents;
     }
 }
